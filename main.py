@@ -3,9 +3,9 @@ from vpython import sphere, vector, rate, mag, norm, cross, color, box, label, s
 import random
 
 # Enlarge the canvas
-scene.width = 1600  # Set the width of the canvas (default is 640)
-scene.height = 800  # Set the height of the canvas (default is 400)
-scene.range = 3  # Increase the visible range of the 3D scene
+scene.width = 1800  # Set the width of the canvas (default is 1800)
+scene.height = 900  # Set the height of the canvas (default is 900)
+scene.range = 2  # Increase the visible range of the 3D scene
 
 def rainbow_color(normalized_value):
     """Map a normalized value (0 to 1) to a rainbow color."""
@@ -23,7 +23,7 @@ def create_legend():
     legend_width = 0.1
     legend_height = 1
     legend_pos = vector(-2, 2, 0)  # Position of the legend
-    num_segments = 10  # Number of segments in the legend
+    num_segments = 21  # Number of segments in the legend
 
     for i in range(num_segments):
         normalized_value = i / (num_segments - 1)
@@ -44,16 +44,15 @@ async def main():
     rsoft = 0.03
     w = vector(0, 0.05, 0)
     n = 0
-    N = 100
+    N = 30
     stars = []
-
-    ##### Create Legend #####
+    
     create_legend()
 
-    ##### Main #####
+    '''Generate a random distribution of stars in a sphere'''
     while n < N:
         rt = R * vector(2 * random.random() - 1, 2 * random.random() - 1, 2 * random.random() - 1)
-        stars.append(sphere(pos=rt, radius=R / 30, make_trail=False, retain=100, color=color.white))
+        stars.append(sphere(pos=rt, radius=R / 30, make_trail=True, retain=100, color=color.white))
         n += 1
 
     for star in stars:
