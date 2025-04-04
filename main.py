@@ -5,7 +5,7 @@ import random
 # Enlarge the canvas
 scene.width = 1800  # Set the width of the canvas (default is 1800)
 scene.height = 900  # Set the height of the canvas (default is 900)
-scene.range = 2  # Increase the visible range of the 3D scene
+scene.range = 4  # Increase the visible range of the 3D scene
 
 def rainbow_color(normalized_value):
     """Map a normalized value (0 to 1) to a rainbow color."""
@@ -49,6 +49,16 @@ async def main():
     
     create_legend()
 
+    # Create the legend
+    create_legend()
+
+    # Create a progress bar
+    progress_bar_bg = box(pos=vector(0, -2.5, 0), size=vector(4, 0.1, 0.01), color=color.gray(0.5))
+    progress_bar = box(pos=vector(-2, -2.5, 0), size=vector(0.01, 0.1, 0.01), color=color.green)
+
+    # Create a label for the progress percentage
+    progress_label = label(pos=vector(0, -2.3, 0), text="0%", height=15, box=False, color=color.white)
+
     '''Generate a random distribution of stars in a sphere'''
     while n < N:
         rt = R * vector(2 * random.random() - 1, 2 * random.random() - 1, 2 * random.random() - 1)
@@ -62,8 +72,9 @@ async def main():
 
     t = 0
     dt = 0.01
+    total_time = 100  # Total simulation time
 
-    while t < 50:
+    while t < total_time:
         rate(100)
         max_force = 0  # Track the maximum force for normalization
         for star in stars:
@@ -82,6 +93,14 @@ async def main():
             # Normalize the force magnitude to a range [0, 1] for color mapping
             normalized_force = mag(star.F) / max_force if max_force > 0 else 0
             star.color = rainbow_color(normalized_force)  # Apply rainbow color gradient
+
+        # Update the progress bar
+        progress_fraction = t / total_time
+        progress_bar.size.x = 4 * progress_fraction  # Scale the progress bar width
+        progress_bar.pos.x = -2 + 2 * progress_fraction  # Adjust the position of the progress bar
+
+        # Update the progress percentage label
+        progress_label.text = f"{int(progress_fraction * 100)}%"  # Update the percentage text
 
         t += dt
 
