@@ -44,7 +44,7 @@ async def main():
     rsoft = 0.03
     w = vector(0, 0.05, 0)
     n = 0
-    N = 30
+    N = 100
     stars = []
     
     create_legend()
