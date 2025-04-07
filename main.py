@@ -53,7 +53,6 @@ async def main():
     create_legend()
 
     # Create a progress bar
-    progress_bar_bg = box(pos=vector(0, -2.5, 0), size=vector(4, 0.1, 0.01), color=color.gray(0.5))
     progress_bar = box(pos=vector(-2, -2.5, 0), size=vector(0.01, 0.1, 0.01), color=color.green)
 
     # Create a label for the progress percentage
